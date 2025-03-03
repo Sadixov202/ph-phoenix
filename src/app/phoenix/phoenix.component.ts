@@ -1,15 +1,48 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AppService } from '../services/app/app.service';
 
 @Component({
   selector: 'app-phoenix',
   templateUrl: './phoenix.component.html',
-  styleUrls: ['./phoenix.component.css']
+  styleUrls: ['./phoenix.component.scss']
 })
 export class PhoenixComponent implements OnInit {
 
-  constructor() { }
+  receivedData: any | null = null;
+  private subscription!: Subscription;
+  selectedIds: any[] = [];
+  private hubUrl = 'https://phapi.form.az/ticketHub';
+
+  constructor(
+    private appServices: AppService
+  ) { }
 
   ngOnInit() {
+    this.appServices.startConnection(this.hubUrl);
+    this.getAllIds();
+    this.addClass();
+    this.subscription = this.appServices.data$.subscribe((data) => {
+      this.receivedData = data;
+      this.selectedIds.push(this.receivedData);
+      this.addClass();
+    });
+  }
+
+  addClass() {
+    this.selectedIds.forEach(id => {
+        let el = document.getElementById(`${id}`);
+        el?.classList.add('selected');        
+    });
+  }
+
+  getAllIds() {
+    this.appServices.getAllTickets().subscribe(response => {
+      response?.items.forEach((element: any) => {
+        this.selectedIds.push(element.ticketNumber);
+      });
+      this.addClass();
+    });    
   }
 
 }

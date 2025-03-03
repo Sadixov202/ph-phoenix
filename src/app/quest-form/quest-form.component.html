@@ -1,3 +1,19 @@
-<p>
-  quest-form works!
-</p>
+
+<form [formGroup]="questForm" (ngSubmit)="submit()">
+  <div class="input-wrapper m-b-16">
+      <label for="" class="input-label">Ad</label>
+      <div class="input-wrapper has-icon ">
+          <input formControlName="name" type="text" class="input-control" placeholder="Adınızı daxil edin">
+          <span class="input-icon mdi mdi-email-outline gray-300"></span>
+      </div>
+  </div>
+  <div class="input-wrapper m-b-16 ">
+      <label for="" class="input-label">Soyad</label>
+      <div class="input-wrapper has-icon">
+          <input type="password" formControlName="surname" class="input-control" placeholder="Soyadızı daxil edin">
+          <span class="input-icon mdi mdi-eye-outline gray-300 password-visibility"></span>
+      </div>
+  </div>
+  <button type="submit" [disabled]="!questForm.valid" class="btn btn-medium btn-fluid btn-primary m-t-24">Daxil ol</button>
+</form>
+

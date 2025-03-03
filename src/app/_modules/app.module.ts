@@ -8,6 +8,8 @@ import { QuestFormComponent } from '../quest-form/quest-form.component';
 import { PhoenixComponent } from '../phoenix/phoenix.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ErrorInterceptor } from '../services/interceptor/error.interceptor';
+import { LoaderInterceptor } from '../services/interceptor/loader/loader.interceptor';
 
 @NgModule({
   declarations: [		
@@ -23,7 +25,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
