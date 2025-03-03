@@ -1,4 +1,6 @@
-
+<video  [autoplay]="true" [muted]="true" [loop]="true">
+    <source [src]="videoURl" type="video/mp4">
+</video>
 <form [formGroup]="questForm" (ngSubmit)="submit()">
   <div class="input-wrapper m-b-16">
       <label for="" class="input-label">Ad</label>

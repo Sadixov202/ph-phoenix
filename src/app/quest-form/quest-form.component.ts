@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 export class QuestFormComponent implements OnInit {
 
   questForm!: FormGroup;
+  videoURl = '';
 
   constructor(
     private fb: FormBuilder,
@@ -18,6 +19,7 @@ export class QuestFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.videoURl = 'https://customer-jo5phtbhu7hihx5u.cloudflarestream.com/a7c6c1da328c3556e1acfd7ef0ed1688/downloads/default.mp4'
     this.createLoginForm();
   }
 

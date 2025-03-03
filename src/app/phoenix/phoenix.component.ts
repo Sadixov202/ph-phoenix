@@ -20,8 +20,11 @@ export class PhoenixComponent implements OnInit {
 
   ngOnInit() {
     this.appServices.startConnection(this.hubUrl);
+    this.appServices.hubConnection.onreconnected(connectionId => {
+      this.getAllIds();
+      console.log('SignalR reconnected. Connection ID:', connectionId);
+    });
     this.getAllIds();
-    this.addClass();
     this.subscription = this.appServices.data$.subscribe((data) => {
       this.receivedData = data;
       this.selectedIds.push(this.receivedData);
@@ -37,7 +40,7 @@ export class PhoenixComponent implements OnInit {
   }
 
   getAllIds() {
-    this.appServices.getAllTickets().subscribe(response => {
+    this.appServices.getAllTickets({limit: 2000}).subscribe(response => {
       response?.items.forEach((element: any) => {
         this.selectedIds.push(element.ticketNumber);
       });

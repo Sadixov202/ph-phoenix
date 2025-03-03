@@ -10,7 +10,7 @@ import * as signalR from '@microsoft/signalr';
 export class AppService extends HttpsService {
   public QUEST = 'lotteries';
   public TICKETS = 'tickets'
-  private hubConnection!: signalR.HubConnection;
+  public hubConnection!: signalR.HubConnection;
   private dataSubject = new BehaviorSubject<any | null>(null);
   public data$ = this.dataSubject.asObservable();
 
@@ -27,6 +27,7 @@ export class AppService extends HttpsService {
   public startConnection(hubUrl: string): void {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl(hubUrl)
+      .withAutomaticReconnect()
       .configureLogging(signalR.LogLevel.Information)
       .build();
 
