@@ -1,0 +1,12 @@
+.phoenix{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: calc(100svh - 260px);
+    z-index: 1;
+    svg{
+        width: 100%;
+        height: calc(100svh - 260px);
+    }
+}

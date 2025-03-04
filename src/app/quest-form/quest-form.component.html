@@ -1,0 +1,21 @@
+<div class="base-container">
+    <div class="page-heading">
+        <img src="assets/logo.svg" class="logo" alt="logo">
+    </div>
+    <div class="page-container">
+        <video [autoplay]="true" [muted]="true" [loop]="true" class="video-container">
+            <source [src]="videoURl" type="video/mp4">
+        </video>        
+        <div class="form-container">
+            <form [formGroup]="questForm" (ngSubmit)="submit()">
+                <div class="form-field">
+                    <input formControlName="name" type="text" class="form-control" placeholder="ADINIZI DAXİL EDİN" autocomplete="off">
+                </div>
+                <div class="form-field">
+                    <input formControlName="surname" type="text" class="form-control" placeholder="SOYADINIZI DAXİL EDİN" autocomplete="off">
+                </div>
+                <button type="submit" [disabled]="!questForm.valid" class="form-button">İŞTİRAK ET</button>
+              </form>
+        </div>
+    </div>
+</div>
