@@ -162,3 +162,7 @@ div:where(.swal2-icon).swal2-success [class^=swal2-success-line]{
 .invisible{
     pointer-events: none !important;
 }
+
+html, body {
+    touch-action: pan-x pan-y;
+  }

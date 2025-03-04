@@ -68,6 +68,7 @@ export class QuestFormComponent implements OnInit {
   submit() {
     if (this.questForm.valid) {
       this.appServices.addQuest(this.questForm.value).subscribe(response => {
+        this.isPlaying = false;
         Swal.fire({
           title: 'Əməliyyat uğurla tamamlandı!',
           icon: 'success',
@@ -77,13 +78,19 @@ export class QuestFormComponent implements OnInit {
           customClass: {
             confirmButton: 'form-button theme-dark'
           },
-        }).then((result) => {
-          if (result.value) {
-            this.isPlaying = false;
-          }
         })
       });
     }
   }
 
 }
+
+document.addEventListener("gesturestart", function (event) {
+  event.preventDefault();
+});
+
+document.addEventListener("wheel", function (event) {
+  if (event.ctrlKey) {
+    event.preventDefault();
+  }
+}, { passive: false });
