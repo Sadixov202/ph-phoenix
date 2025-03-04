@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../services/app/app.service';
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
+import { AnimationItem } from 'lottie-web';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,8 +13,16 @@ import Swal from 'sweetalert2';
 })
 export class QuestFormComponent implements OnInit {
 
+  @ViewChild(LottieComponent) lottie: LottieComponent | undefined;
+  animationItem: AnimationItem | undefined; // Animasyonu kontrol etmek için değişken
+  isPlaying: boolean = false; // Animasyonun oynayıp oynamadığını takip etmek için
+
   questForm!: FormGroup;
   videoURl = '';
+  options: AnimationOptions = {
+    path: 'assets/final-hand.json',
+    autoplay: false // Otomatik başlamayı devre dışı bırak
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -23,21 +34,40 @@ export class QuestFormComponent implements OnInit {
     this.createLoginForm();
   }
 
+  animationCreated(animationItem: AnimationItem): void {
+    this.animationItem = animationItem; // AnimationItem değişkenini kaydet
+    this.animationItem.stop(); // İlk açılışta durdur
+  }
+
+  toggleAnimation() {
+    this.isPlaying = true;
+    
+    if (this.animationItem) {
+      this.animationItem.play();
+  
+      setTimeout(() => {
+        this.submit();
+        this.animationItem?.stop();
+      }, 2000);
+
+    }
+
+  }
+
   get formControls() {
     return this.questForm.controls;
   }
 
   createLoginForm() {
     this.questForm = this.fb.group({
-      name: ['', Validators.required],
-      surname: ['', [Validators.required]],
+      name: ['Cavid', Validators.required],
+      surname: ['Sadixov', [Validators.required]],
     });
   }
 
   submit() {
     if (this.questForm.valid) {
       this.appServices.addQuest(this.questForm.value).subscribe(response => {
-        this.questForm.reset();
         Swal.fire({
           title: 'Əməliyyat uğurla tamamlandı!',
           icon: 'success',
@@ -46,7 +76,11 @@ export class QuestFormComponent implements OnInit {
           buttonsStyling: false,
           customClass: {
             confirmButton: 'form-button theme-dark'
-        },
+          },
+        }).then((result) => {
+          if (result.value) {
+            this.isPlaying = false;
+          }
         })
       });
     }
