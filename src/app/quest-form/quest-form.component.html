@@ -6,7 +6,7 @@
         <video [autoplay]="true" [muted]="true" [loop]="true" class="video-container">
             <source [src]="videoURl" type="video/mp4">
         </video>        
-        <div class="hand {{isPlaying ? 'invisible' : ''}}" (click)="toggleAnimation()">
+        <div class="hand {{isPlaying ? 'invisible' : ''}}" (touchstart)="toggleAnimation()">
             <ng-lottie [options]="options" width="600px" (animationCreated)="animationCreated($event)" height="500px"></ng-lottie>
           </div>
     </div>

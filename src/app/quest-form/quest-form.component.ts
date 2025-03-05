@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppService } from '../services/app/app.service';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
@@ -81,6 +81,17 @@ export class QuestFormComponent implements OnInit {
         })
       });
     }
+  }
+
+  // @HostListener('click')
+  // onClick() {
+  //   this.toggleAnimation();
+  // }
+
+  @HostListener('touchstart', ['$event'])
+  onTouchStart(event: TouchEvent) {
+    event.preventDefault(); // Prevents double firing on some devices
+    this.toggleAnimation();
   }
 
 }
