@@ -83,16 +83,8 @@ export class QuestFormComponent implements OnInit {
     }
   }
 
-  // @HostListener('click')
-  // onClick() {
-  //   this.toggleAnimation();
-  // }
 
-  @HostListener('touchstart', ['$event'])
-  onTouchStart(event: TouchEvent) {
-    event.preventDefault(); // Prevents double firing on some devices
-    this.toggleAnimation();
-  }
+
 
 }
 
